@@ -11,6 +11,30 @@ scoop install quarkus-cli
 quarkus create app com.github.ronlievens:quarkus-todo
 ```
 
+Run `mvn quarkus:help` to see the options you can use.
+
+Run `mvn quarkus:list-extensions` to see the list of extensions.
+
+
+# Setup - Mariadb
+
+To create Mariadb database with user, run:
+
+```sql
+DROP DATABASE IF EXISTS todo_db;
+CREATE DATABASE todo_db CHARACTER SET = 'utf8' COLLATE = 'utf8_general_ci';
+
+DROP USER IF EXISTS 'todo_db'@'%';
+DROP USER IF EXISTS 'todo_db'@'localhost';
+CREATE USER 'todo_usr'@'localhost' IDENTIFIED BY 'todo_pwd';
+CREATE USER 'todo_usr'@'%' IDENTIFIED BY 'todo_pwd';
+
+GRANT ALL ON todo_db.* TO 'todo_usr'@'localhost';
+GRANT ALL ON todo_db.* TO 'todo_usr'@'%';
+
+FLUSH PRIVILEGES;
+```
+
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
